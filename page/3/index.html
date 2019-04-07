@@ -269,6 +269,242 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qiaolunzhang.github.io/2016/08/24/data-hacking-practice-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Qiaolun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="live like a new baby">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/24/data-hacking-practice-5/" itemprop="url">data-hacking-practice-5</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-24T10:19:47+01:00">
+                2016-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/08/24/data-hacking-practice-5/" class="leancloud_visitors" data-flag-title="data-hacking-practice-5">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="DNS-Break"><a href="#DNS-Break" class="headerlink" title="DNS Break"></a>DNS Break</h2><h3 id="Query-types"><a href="#Query-types" class="headerlink" title="Query types"></a>Query types</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print dnsdf.qtype_name.value_counts()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>qtype_name:在dns.log（DNS query/response details)文件中,表示name of the query type(e.g.A,AAAA,CNAME,PTR)</p>
+</blockquote>
+<h3 id="Query-type-information"><a href="#Query-type-information" class="headerlink" title="Query type information"></a>Query type information</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for q in dnsdf[&apos;qtype_name&apos;].unique().tolist():</span><br><span class="line">  print &quot;Query Type: %s&quot; % q</span><br><span class="line">  print dnsdf[dnsdf[&apos;qtype_name&apos;] == q][&apos;query&apos;].value_counts().head(5)</span><br><span class="line">  print &quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>打印出每一种DNS记录对应的前5个请求对象</p>
+<blockquote>
+<p>query(in dns.log): domain name subject of the query</p>
+</blockquote>
+<h3 id="Response-Code-information"><a href="#Response-Code-information" class="headerlink" title="Response Code information"></a>Response Code information</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnsdf[&apos;rcode_name&apos;].value_counts()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>rcode_name(in dns.log):Descriptive name of the response code(e.g.NOERROR,NXDOMAIN)</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>DNS Return Message</th>
+<th>DNS Response Code</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> NOERROR</td>
+<td>RCODE:0</td>
+<td>DNS Query completed successfully</td>
+</tr>
+<tr>
+<td> FORMERR</td>
+<td>RCODE:1</td>
+<td>DNS Query Format Error</td>
+</tr>
+<tr>
+<td> SERVFAIL</td>
+<td>RCODE:2</td>
+<td>Server failed to complete the DNS request</td>
+</tr>
+<tr>
+<td> NXDOMAIN</td>
+<td>RCODE:3</td>
+<td>Domain name does not exist.  For help resolving this error, read here.</td>
+</tr>
+<tr>
+<td> NOTIMP</td>
+<td>RCODE:4</td>
+<td>Function not implemented</td>
+</tr>
+<tr>
+<td> REFUSED</td>
+<td>RCODE:5</td>
+<td>The server refused to answer for the query</td>
+</tr>
+<tr>
+<td> YXDOMAIN</td>
+<td>RCODE:6</td>
+<td>Name that should not exist, does exist</td>
+</tr>
+<tr>
+<td> XRRSET</td>
+<td>RCODE:7</td>
+<td>RRset that should not exist, does exist</td>
+</tr>
+<tr>
+<td> NOTAUTH</td>
+<td>RCODE:8</td>
+<td>Server not authoritative for the zone</td>
+</tr>
+<tr>
+<td> NOTZONE</td>
+<td>RCODE:9</td>
+<td>Name not in zone</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>DGA: Domain Generation Algorithm,下面的代码用于查找那些用DGA查找C2 domain的样本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnsdf[dnsdf[&apos;rcode_name&apos;] == &apos;NXDOMAIN&apos;][&apos;sample&apos;].value_counts().head(10)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>在http记录里我们会期待在“Host” header里看到一个值，这说明了客户端正在连接一个给定的IP地址。但是有一些很有意思的是在HTTP的“Host” header里可以看到的hostname，在DNS query记录里却查询不到。这相当于说这个样本没有被记录到PCAP，或者说它就没有发生。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">intersect_hostnames = set(pd.Series(list(set(httpdf[&apos;host&apos;]).intersection(set(dnsdf[&apos;query&apos;])))))</span><br><span class="line">interesting = []</span><br><span class="line">tempdf = pd.DataFrame()</span><br><span class="line">for hn in list(set(httpdf[&apos;host&apos;])):</span><br><span class="line"># is_ip函数之前分析过了</span><br><span class="line">  if hn not in intersect_hostnames and not is_ip(hn):</span><br><span class="line">  #print hn</span><br><span class="line">  interesting.append(hn)</span><br><span class="line">  tempdf = tempdf.append(httpdf[httpdf[&apos;host&apos;]] == hn)</span><br></pre></td></tr></table></figure></p>
+<p>接下来做了一些处理，排序，找出可以的样本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tempdf[&apos;count&apos;] = 1</span><br><span class="line">tempdf[[&apos;host&apos;, &apos;id.resp_h&apos;, &apos;sample&apos;, &apos;count&apos;]].groupby([&apos;sample&apos;, &apos;host&apos;, &apos;id.resp_h&apos;]).sum().sort(&apos;count&apos;, ascending=0)</span><br></pre></td></tr></table></figure></p>
+<p>挑选前几个，测试是否的确没在DNS记录里出现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print dnsdf[dnsdf[&apos;query&apos;] == &quot;dgyqimolcqm.cm&quot;]</span><br><span class="line">print dnsdf[dnsdf.answers.str.contains(&apos;dgyqimolcqm.cm&apos;)]</span><br><span class="line">print dnsdf[dnsdf[&apos;sample&apos;] == &quot;BIN_ZeroAccess_Sirefef_C2A9CCC8C6A6DF1CA1725F9&quot;][&apos;query&apos;].value_counts().head(50)</span><br></pre></td></tr></table></figure></p>
+<h2 id="HTTP-Funtime"><a href="#HTTP-Funtime" class="headerlink" title="HTTP Funtime"></a>HTTP Funtime</h2><p>总体情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print &quot;%s Unique User-Agents in %s samples.&quot; % (httpdf[&apos;user_agent&apos;].nunique(), httpdf[&apos;sample&apos;].nunique())</span><br></pre></td></tr></table></figure></p>
+<p>对客户端做了排序，接着又做了一些其他的图表操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tempdf = pd.DataFrame(columns=[&apos;sample&apos;,&apos;num_ua&apos;])</span><br><span class="line">for sample in list(set(httpdf[&apos;sample&apos;])):</span><br><span class="line">    tempdf = tempdf.append(&#123;&apos;sample&apos;:sample, &apos;num_ua&apos;:httpdf[httpdf[&apos;sample&apos;] == sample][&apos;user_agent&apos;].nunique()&#125;, ignore_index=True)</span><br><span class="line">tempdf.sort(&apos;num_ua&apos;, ascending=0).head()</span><br></pre></td></tr></table></figure></p>
+<h2 id="Conn-log-information"><a href="#Conn-log-information" class="headerlink" title="Conn.log information"></a>Conn.log information</h2><h3 id="ASN-information"><a href="#ASN-information" class="headerlink" title="ASN information"></a>ASN information</h3><p>首先查看ASN数据库的覆盖率，也就是IP位置对应的地理位置知道多少<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conndf[conndf[&apos;maxmind_asn&apos;] == &quot;UNKNOWN&quot;][&apos;id.resp_h&apos;].value_counts()</span><br></pre></td></tr></table></figure></p>
+<p>在上式中，conndf中的maxmind_asn这一个column来历如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conndf[&apos;maxmind_asn&apos;] = conndf[&apos;id.resp_h&apos;].map(maxmind_lookup)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>id.resp_h(conn.log):responding endpoint’s IP address(AKA RESP)</p>
+</blockquote>
+<h3 id="APT-connections"><a href="#APT-connections" class="headerlink" title="APT connections"></a>APT connections</h3><p>接下来的代码看的就是那些标记为APT的样本，看这些样本和我们已经有的ASN数据库的对应情况,这里做了一个柱状图。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ax = box_plot_df_setup(conndf[conndf[&apos;threat&apos;] == &apos;APT&apos;][&apos;sample&apos;], conndf[conndf[&apos;threat&apos;] == &apos;APT&apos;][&apos;maxmind_asn&apos;]).T.plot(kind=&apos;bar&apos;, stacked=True)</span><br><span class="line">pylab.ylabel(&apos;Sample Occurrences&apos;)</span><br><span class="line">pylab.xlabel(&apos;ASN (Autonomous System Number)&apos;)</span><br><span class="line">patches, labels = ax.get_legend_handles_labels()</span><br><span class="line">ax.legend(patches, labels, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., title=&quot;Sample Name&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>下面是box_plot_df_setup函数的定义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def box_plot_df_setup(series_a, series_b):</span><br><span class="line">    # Count up all the times that a category from series_a</span><br><span class="line">    # matches up with a category from series_b. This is</span><br><span class="line">    # basically a gigantic contingency table</span><br><span class="line">    cont_table = collections.defaultdict(lambda : collections.Counter())</span><br><span class="line">    for val_a, val_b in zip(series_a.values, series_b.values):</span><br><span class="line">        cont_table[val_a][val_b] += 1</span><br><span class="line"></span><br><span class="line">    # Create a dataframe</span><br><span class="line">    # A dataframe with keys from series_a as the index, series_b_keys</span><br><span class="line">    # as the columns and the counts as the values.</span><br><span class="line">    dataframe = pd.DataFrame(cont_table.values(), index=cont_table.keys())</span><br><span class="line">    dataframe.fillna(0, inplace=True)</span><br><span class="line">    return dataframe</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>collections.defaultdict([default_factory[,…]]):第一个参数要是callable，如果key不存在，则调用callable，将value赋为返回的值</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; s = &apos;mississippi&apos;</span><br><span class="line">&gt;&gt;&gt; d = defaultdict(int)</span><br><span class="line">&gt;&gt;&gt; for k in s:</span><br><span class="line">...     d[k] += 1</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; d.items()</span><br><span class="line">[(&apos;i&apos;, 4), (&apos;p&apos;, 2), (&apos;s&apos;, 4), (&apos;m&apos;, 1)]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; s = [(&apos;yellow&apos;, 1), (&apos;blue&apos;, 2), (&apos;yellow&apos;, 3), (&apos;blue&apos;, 4), (&apos;red&apos;, 1)]</span><br><span class="line">&gt;&gt;&gt; d = defaultdict(list)</span><br><span class="line">&gt;&gt;&gt; for k, v in s:</span><br><span class="line">...     d[k].append(v)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; d.items()</span><br><span class="line">[(&apos;blue&apos;, [2, 4]), (&apos;red&apos;, [1]), (&apos;yellow&apos;, [1, 3])]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>zip用法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">alist = [&apos;a1&apos;, &apos;a2&apos;, &apos;a3&apos;]</span><br><span class="line">blist = [&apos;b1&apos;, &apos;b2&apos;, &apos;b3&apos;]</span><br><span class="line"></span><br><span class="line">for a, b in zip(alist, blist):</span><br><span class="line">    print a, b</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a1 b1</span><br><span class="line">&gt;&gt;&gt; a2 b2</span><br><span class="line">&gt;&gt;&gt; a3 b3</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>collections.Counter</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = collections.Counter()</span><br><span class="line">&gt;&gt;&gt; a[1] += 1</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&gt;&gt;&gt; Counter(&#123;&apos;1&apos; : 1&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>pandas.DataFrame.T  :  Transpose index and columns</p>
+</blockquote>
+<p>参考</p>
+<p><a href="https://docs.python.org/2/library/collections.html#collections.defaultdict" target="_blank" rel="noopener">https://docs.python.org/2/library/collections.html#collections.defaultdict</a><br><a href="http://stackoverflow.com/questions/5900578/how-does-collections-defaultdict-work" target="_blank" rel="noopener">http://stackoverflow.com/questions/5900578/how-does-collections-defaultdict-work</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://qiaolunzhang.github.io/2016/08/20/data-hacking-practice-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1624,165 +1860,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://qiaolunzhang.github.io/2016/08/14/阅读小记及《影响力》/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhang Qiaolun">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="live like a new baby">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/14/阅读小记及《影响力》/" itemprop="url">阅读小记及《影响力》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-14T20:20:56+01:00">
-                2016-08-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/08/14/阅读小记及《影响力》/" class="leancloud_visitors" data-flag-title="阅读小记及《影响力》">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="阅读小记及《影响力》一书"><a href="#阅读小记及《影响力》一书" class="headerlink" title="阅读小记及《影响力》一书"></a>阅读小记及《影响力》一书</h1><p><em>打小爱书，封面精美纸质有质感者尤甚</em></p>
-<p>后来书堆积得越来越多，也不得不说是一个浪费。索性就不买书了。但是我反倒更珍惜阅读的机会，常常有去图书馆借书。</p>
-<p>这个暑假也的确是读了挺多书的。就总结一下最近读的《影响力》这本书吧。这是在豆瓣评价挺高的一本书。里面有很多例子，可以让人思考很多。</p>
-<h2 id="书的框架"><a href="#书的框架" class="headerlink" title="书的框架"></a>书的框架</h2><p>其实里面包括的内容有很多，我只是简短地举一些例子，抛砖引玉。</p>
-<ul>
-<li>互惠</li>
-</ul>
-<p>投桃报李，中国人对此再清楚不过了。但有时候别人会利用我们的这种心理。</p>
-<ul>
-<li>承诺和一致</li>
-</ul>
-<p>为什么有人减肥要向全世界宣布呢？因为他在作出承诺，这会让他有用心去完成的压力。但是我同样听说有的时候我们在宣布的同时心里会有满足，似乎在心理上完成了这件事，得到了满足，于是就不太可能在现实中完成这件事了。所以，可能，在纸上写下来，对自己做承诺或许会更好。</p>
-<ul>
-<li>社会认同</li>
-</ul>
-<p>作者用社会认同原理解释了为什么紧急情况下周围人多反而会比人少更难得到帮助。大家都在观望。</p>
-<ul>
-<li>喜好</li>
-</ul>
-<p>我们常常会更喜欢和自己相似的人。</p>
-<ul>
-<li>权威</li>
-</ul>
-<p>其中有一个在权威要求下电极实验者的实验让人记忆深刻。</p>
-<ul>
-<li>短缺</li>
-</ul>
-<p>越容易得到的东西，我们越不懂得珍惜。</p>
-<p>就到这里吧，多阅读，人生就会多一些不同的感悟。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1833,7 +1910,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1855,7 +1932,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
