@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Raspberry Testbed设置Wifi First setup the Wifi location 首先设置Wifi地区，在设置Wifi地区之后才能开启树莓派的Wifi功能。  使用sudo raspi-config命令配置Wifi时区  配置Wifi的SSID和密码。  配置Wifi的SSID和密码可以采取两种方式。一种是直接使用raspi-config```配置，另外一种是使用配置文件">
+<meta name="description" content="Raspberry Testbed设置Wifi First setup the Wifi location. Only after setting up Wifi location can we open the Wifi function of Raspberry Pi. Then set up the SSID and password of Wifi.  There are two ways">
 <meta name="keywords" content="research,raspberry pi,testbed">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Raspberry 实验床搭建">
 <meta property="og:url" content="https://qiaolunzhang.github.io/2019/04/07/Raspberry-实验床搭建/index.html">
 <meta property="og:site_name" content="live like a new baby">
-<meta property="og:description" content="Raspberry Testbed设置Wifi First setup the Wifi location 首先设置Wifi地区，在设置Wifi地区之后才能开启树莓派的Wifi功能。  使用sudo raspi-config命令配置Wifi时区  配置Wifi的SSID和密码。  配置Wifi的SSID和密码可以采取两种方式。一种是直接使用raspi-config```配置，另外一种是使用配置文件">
+<meta property="og:description" content="Raspberry Testbed设置Wifi First setup the Wifi location. Only after setting up Wifi location can we open the Wifi function of Raspberry Pi. Then set up the SSID and password of Wifi.  There are two ways">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-07T17:18:18.966Z">
+<meta property="og:updated_time" content="2019-04-07T17:24:56.297Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry 实验床搭建">
-<meta name="twitter:description" content="Raspberry Testbed设置Wifi First setup the Wifi location 首先设置Wifi地区，在设置Wifi地区之后才能开启树莓派的Wifi功能。  使用sudo raspi-config命令配置Wifi时区  配置Wifi的SSID和密码。  配置Wifi的SSID和密码可以采取两种方式。一种是直接使用raspi-config```配置，另外一种是使用配置文件">
+<meta name="twitter:description" content="Raspberry Testbed设置Wifi First setup the Wifi location. Only after setting up Wifi location can we open the Wifi function of Raspberry Pi. Then set up the SSID and password of Wifi.  There are two ways">
 
 
 
@@ -352,15 +352,14 @@
 
       
         <h1 id="Raspberry-Testbed"><a href="#Raspberry-Testbed" class="headerlink" title="Raspberry Testbed"></a>Raspberry Testbed</h1><h2 id="设置Wifi"><a href="#设置Wifi" class="headerlink" title="设置Wifi"></a>设置Wifi</h2><ul>
-<li>First setup the Wifi location 首先设置Wifi地区，在设置Wifi地区之后才能开启树莓派的Wifi功能。</li>
+<li>First setup the Wifi location. Only after setting up Wifi location can we open the Wifi function of Raspberry Pi.</li>
+<li>Then set up the SSID and password of Wifi.</li>
 </ul>
-<p>使用sudo raspi-config命令配置Wifi时区</p>
-<ul>
-<li>配置Wifi的SSID和密码。</li>
-</ul>
-<p>配置Wifi的SSID和密码可以采取两种方式。一种是直接使用<figure class="highlight plain"><figcaption><span>raspi-config```配置，另外一种是使用配置文件配置。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<p>sudo vim /etc/wpa_supplicant/wpa_supplicant.conf<br>wpa_cli -i wlan0 reconfigure<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在wpa_supplicant.conf末尾添加如下：</span><br></pre></td></tr></table></figure></p>
-<p>network={<br>    ssid=”testing”<br>    psk=”testingPassword”<br>}<br><code>`</code></p>
+<p>There are two ways of these two steps.<br>The first one is to use the following command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure>
+<p>The second way is using the config file. We need to add the following lines to file wpa_supplicant.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">country=xx</span><br><span class="line">network=&#123;</span><br><span class="line">    ssid=&quot;testing&quot;</span><br><span class="line">    psk=&quot;testingPassword&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The command used is as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/wpa_supplicant/wpa_supplicant.conf</span><br><span class="line">wpa_cli -i wlan0 reconfigure // restart the wlan0</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -504,7 +503,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
