@@ -269,6 +269,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qiaolunzhang.github.io/2016/08/25/data-hacking-practice-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Qiaolun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="live like a new baby">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/25/data-hacking-practice-6/" itemprop="url">data-hacking-practice-6</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-25T07:03:44+08:00">
+                2016-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/08/25/data-hacking-practice-6/" class="leancloud_visitors" data-flag-title="data-hacking-practice-6">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><em>加把油，这应该是最后一篇这个项目了</em></p>
+<h2 id="Conn-log-information"><a href="#Conn-log-information" class="headerlink" title="Conn.log information"></a>Conn.log information</h2><h3 id="ASN-information"><a href="#ASN-information" class="headerlink" title="ASN information"></a>ASN information</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conndf[conndf[&apos;maxmind_asn&apos;] == &apos;UNKNOWN&apos;][&apos;id.resp_h&apos;].value_counts()</span><br></pre></td></tr></table></figure>
+<p>首先检查ASN数据库，发现这个数据库有问题，发现数据库对不上，相差非常大。<br><img src="data-hacking-practice-6/conndf_maxmind_1.png" alt><br><em>原作者的数据</em><br><img src="data-hacking-practice-6/conndf_maxmind_2.png" alt><br><em>我的数据</em></p>
+<p>然后先接着做做看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ax = box_plot_df_setup(conndf[conndf[&apos;threat&apos;] == &apos;APT&apos;][&apos;sample&apos;], conndf[conndf[&apos;threat&apos;] == &apos;APT&apos;][&apos;maxmind_asn&apos;]).T.plot(kind=&apos;bar&apos;, stacked=True)</span><br><span class="line">pylab.ylabel(&apos;Sample Occurrences&apos;)</span><br><span class="line">pylab.xlabel(&apos;ASN (Autonomous System Number)&apos;)</span><br><span class="line">patches, labels = ax.get_legend_handles_labels()</span><br><span class="line">ax.legend(patches, labels, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., title=&quot;Sample Name&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>下面的图当然不对<br><img src="data-hacking-practice-6/bar1.png" alt><br><em>原作者的图像</em><br><img src="data-hacking-practice-6/bar2.png" alt><br><em>我的图像</em><br>在这里可以看出，相差其实只有一个样本，这个样本对应的区域现在ASN没有收录，就是说我的数据库和作者使用的有部分的出入。</p>
+<p>这个地点的ASN(Autonomous System Number)为AS21788 Network Operations Center Lnc.（但仍有点奇怪，这个像是个很有名的地方）</p>
+<p>找出一个可疑的样本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conndf[conndf[&apos;sample&apos;] == &quot;BIN_8202_6d2c12085f0018daeb9c1a53e53fd4d1&quot;][[&apos;maxmind_asn&apos;,&apos;id.resp_h&apos;]]</span><br></pre></td></tr></table></figure></p>
+<h3 id="Top-N-it’s-everybody’s-favorite"><a href="#Top-N-it’s-everybody’s-favorite" class="headerlink" title="Top-N(it’s everybody’s favorite)"></a>Top-N(it’s everybody’s favorite)</h3><p>找出传输了最多数据的样本，然后查看被这个样本所用的端口。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conndf[&apos;count&apos;]</span><br><span class="line">grouped = conndf.groupby([&apos;sample&apos;, &apos;id.resp_p&apos;]).sub()</span><br><span class="line">grouped.sort(&apos;total_bytes&apos;, ascending = 0).head(10)</span><br></pre></td></tr></table></figure></p>
+<p>返现1935端口很可疑，进一步查看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conndf[conndf[&apos;id.resp_p&apos;] == 1935][&apos;id.resp_h&apos;, &apos;proto&apos;]</span><br></pre></td></tr></table></figure></p>
+<p>以及336端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conndf[conndf[&apos;id.resp_p&apos;] == 336][[&apos;id.resp_h&apos;, &apos;proto&apos;]]</span><br></pre></td></tr></table></figure></p>
+<h2 id="SMTP-because-who-doesn’t-love-some-SPAM"><a href="#SMTP-because-who-doesn’t-love-some-SPAM" class="headerlink" title="SMTP, because who doesn’t love some SPAM"></a>SMTP, because who doesn’t love some SPAM</h2><p>首先看看大致的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这个在我的版本上没用</span><br><span class="line">smtpdf.sample.value_counts()</span><br></pre></td></tr></table></figure></p>
+<p>用另一种<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smtpdf[&apos;sample&apos;].value_counts()</span><br></pre></td></tr></table></figure></p>
+<h3 id="Host-aka-Open-Relays"><a href="#Host-aka-Open-Relays" class="headerlink" title="Host aka Open Relays"></a>Host aka Open Relays</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print &quot;Unique Hosts found as the HELO portion of SMTP traffic: %s&quot; % smtpdf.helo.unique()</span><br><span class="line">print &quot;&quot;</span><br><span class="line">print &quot;Some of the exapmples&quot;</span><br><span class="line">print smtpdf.helo.value_counts().head(10)</span><br></pre></td></tr></table></figure>
+<h3 id="Patterns-in-email"><a href="#Patterns-in-email" class="headerlink" title="Patterns in email"></a>Patterns in email</h3><p>从发送者和接收方寻找一些模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">smtpdf[&apos;count&apos;] = 1</span><br><span class="line">grouped = smtpdf[smtpdf[&apos;from&apos;] != &quot;-&quot;][[&apos;from&apos;,&apos;subject&apos;,&apos;count&apos;]].groupby([&apos;from&apos;, &apos;subject&apos;]).sum()</span><br><span class="line">grouped.sort(&apos;count&apos;, ascending = 0).head(20)</span><br></pre></td></tr></table></figure></p>
+<h2 id="Files"><a href="#Files" class="headerlink" title="Files"></a>Files</h2><h3 id="Summary-information"><a href="#Summary-information" class="headerlink" title="Summary information"></a>Summary information</h3><p>查看那种文件格式最多，以及与它相关的服务类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ax = box_plot_df_setup(filesdf[&apos;source&apos;], filesdf[&apos;mime_type&apos;]).T.plot(kind=&apos;bar&apos;, stacked=True)</span><br><span class="line">pylab.xlabel(&apos;Mime-Type&apos;)</span><br><span class="line">pylab.ylabel(&apos;Number of Files&apos;)</span><br><span class="line">patches, labels = ax.get_legend_handles_labels()</span><br><span class="line">ax.legend(patches, labels, title=&quot;Service Type&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>一些更具体的分析工作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filesdf[&apos;count&apos;] = 1</span><br><span class="line">filesdf[filesdf[&apos;filename&apos;] != &apos;-&apos;][[&apos;source&apos;, &apos;mime_type&apos;, &apos;seen_bytes&apos;, &apos;count&apos;]].groupby([&apos;source&apos;, &apos;mime_type&apos;]).sum().sort(&apos;count&apos;, ascending=0).head(10)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filesdf[filesdf[&apos;filename&apos;] != &apos;-&apos;][[&apos;sample&apos;,&apos;mime_type&apos;,&apos;filename&apos;,&apos;count&apos;]].groupby([&apos;sample&apos;,&apos;mime_type&apos;,&apos;filename&apos;]).sum().sort(&apos;count&apos;, ascending=0).head(10)</span><br></pre></td></tr></table></figure>
+<h2 id="Notice"><a href="#Notice" class="headerlink" title="Notice"></a>Notice</h2><h3 id="What-things-should-we-pay-attention-to"><a href="#What-things-should-we-pay-attention-to" class="headerlink" title="What things should we pay attention to"></a>What things should we pay attention to</h3><p>查看note，msg相关的的表格<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">noticedf[&apos;count&apos;] = 1</span><br><span class="line">noticedf[[&apos;note&apos;,&apos;msg&apos;,&apos;count&apos;]].groupby([&apos;note&apos;,&apos;msg&apos;]).sum().sort(&apos;count&apos;, ascending=0)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">noticedf[&apos;count&apos;] = 1</span><br><span class="line">noticedf[[&apos;note&apos;, &apos;msg&apos;, &apos;count&apos;]].groupby([&apos;note&apos;,&apos;msg&apos;]).sum().sort(&apos;count&apos;, ascending=0)</span><br></pre></td></tr></table></figure>
+<h2 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h2><h3 id="Stats"><a href="#Stats" class="headerlink" title="Stats"></a>Stats</h3><p>在前面看到了很多SSL的notice，接下来就看看SSL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssldf[&apos;id.resp_p&apos;].value_counts()</span><br></pre></td></tr></table></figure>
+<p>接下来的作图倒很有意思,字典里一层一层地下去，然后一层一层地yongname和children<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;&apos;name&apos; : &apos;ssl&apos;&#125;</span><br><span class="line">samples = list(set(ssldf[&apos;sample&apos;].tolist()))</span><br><span class="line">data[&apos;children&apos;] = list()</span><br><span class="line">sampleindex = 0</span><br><span class="line">for sample in samples:</span><br><span class="line">    data[&apos;children&apos;].append(&#123;&apos;name&apos; : sample, &apos;children&apos; : list()&#125;)</span><br><span class="line">    ports = set(ssldf[ssldf[&apos;sample&apos;] == sample][&apos;id.resp_p&apos;].tolist())</span><br><span class="line">    portindex = 0</span><br><span class="line">    for port in ports:</span><br><span class="line">        data[&apos;children&apos;][sampleindex][&apos;children&apos;].append(&#123;&apos;name&apos; : str(port), &apos;children&apos; : list()&#125;)</span><br><span class="line">        hostnames = set(list(ssldf.loc[(ssldf[&apos;id.resp_p&apos;] == int(port)) &amp; (ssldf[&apos;sample&apos;] == sample)][&apos;server_name&apos;]))</span><br><span class="line">        for hostname in hostnames:</span><br><span class="line">            data[&apos;children&apos;][sampleindex][&apos;children&apos;][portindex][&apos;children&apos;].append(&#123;&apos;name&apos; : hostname, &apos;size&apos; : 1&#125;)</span><br><span class="line">        portindex += 1</span><br><span class="line">    sampleindex += 1</span><br><span class="line">json.dump(data, open(&apos;ssl.json&apos;, &apos;w&apos;))</span><br></pre></td></tr></table></figure></p>
+<p>参考</p>
+<p><a href="http://nbviewer.jupyter.org/github/ClickSecurity/data_hacking/blob/master/contagio_traffic_analysis/contagio_traffic_analysis.ipynb" target="_blank" rel="noopener">http://nbviewer.jupyter.org/github/ClickSecurity/data_hacking/blob/master/contagio_traffic_analysis/contagio_traffic_analysis.ipynb</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://qiaolunzhang.github.io/2016/08/24/data-hacking-practice-5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1716,150 +1870,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://qiaolunzhang.github.io/2016/08/16/windows下利用Anaconda搭建python2和python3共存/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhang Qiaolun">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="live like a new baby">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/16/windows下利用Anaconda搭建python2和python3共存/" itemprop="url">windows下利用Anaconda搭建python2和python3共存</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-16T16:22:07+08:00">
-                2016-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/08/16/windows下利用Anaconda搭建python2和python3共存/" class="leancloud_visitors" data-flag-title="windows下利用Anaconda搭建python2和python3共存">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="windows下利用Anaconda搭建python2和python3共存"><a href="#windows下利用Anaconda搭建python2和python3共存" class="headerlink" title="windows下利用Anaconda搭建python2和python3共存"></a>windows下利用Anaconda搭建python2和python3共存</h1><p>windows下不同的python版本共存一直是一个纠结人的问题。python有些库的安装有比较麻烦，整天折腾工具是一件很浪费时间的事。</p>
-<p>而Anaconda整合了很多python的库。在Anaconda里，python和其他的库一样，只是一个插件。搭建不同版本的python就比较简单。</p>
-<h2 id="官方不同python版本环境的搭建"><a href="#官方不同python版本环境的搭建" class="headerlink" title="官方不同python版本环境的搭建"></a>官方不同python版本环境的搭建</h2><h3 id="查看已安装版本"><a href="#查看已安装版本" class="headerlink" title="查看已安装版本"></a>查看已安装版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda info envs</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python --version #正在使用的版本</span><br></pre></td></tr></table></figure>
-<h3 id="安装不同的版本"><a href="#安装不同的版本" class="headerlink" title="安装不同的版本"></a>安装不同的版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create --name snakes python=3 #安装python</span><br></pre></td></tr></table></figure>
-<p>这时会发现在Anaconda的安装路径的envs路径下会多出来一个snakes文件夹。</p>
-<h3 id="使用另一版本的python"><a href="#使用另一版本的python" class="headerlink" title="使用另一版本的python"></a>使用另一版本的python</h3><p>linux：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source activate snakes</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">windows：activate snakes</span><br></pre></td></tr></table></figure>
-<h3 id="回到默认版本的python"><a href="#回到默认版本的python" class="headerlink" title="回到默认版本的python"></a>回到默认版本的python</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
-<h2 id="很便捷的不同python版本环境的搭建"><a href="#很便捷的不同python版本环境的搭建" class="headerlink" title="很便捷的不同python版本环境的搭建"></a>很便捷的不同python版本环境的搭建</h2><p><em>上面虽然可以创建不同版本的python环境，但安装新包网速着实慢。。。</em></p>
-<p>首先根据使用最多的python版本，安装对应的Anaconda安装包，然后再把另一个python版本的Anaconda安装到第一个Anaconda安装路径下的envs文件夹即可，详见参考网址。<br>在envs下的安装目录名就是之后使用它的名字。<br>eg：<br>我的安装路径是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Anaconda3\envs\py2</span><br></pre></td></tr></table></figure></p>
-<p>使用方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source activate py2</span><br><span class="line">deactivate</span><br></pre></td></tr></table></figure></p>
-<p>如果某些包Anaconda没有收录，可转换到对应的python版本后，直接pip install sth，安装后的就是对应版本的python的包。</p>
-<p>参考<br><a href="http://conda.pydata.org/docs/py2or3.html" target="_blank" rel="noopener">http://conda.pydata.org/docs/py2or3.html</a><br><a href="http://blog.csdn.net/infin1te/article/details/50445217" target="_blank" rel="noopener">http://blog.csdn.net/infin1te/article/details/50445217</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1910,7 +1920,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1932,7 +1942,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
