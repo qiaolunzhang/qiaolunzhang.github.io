@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Politecnico di Milano</a>. Building 20, Via Giuseppe Ponzio, 34, 20133 Milano MI.
+subtitle: <a href='#'>Politecnico di Milano</a>. 
 
 profile:
   align: right
