@@ -5,5 +5,4 @@ inline: true
 related_posts: false
 ---
 
-I won ACP best paper award!
-
+I got ACP best paper award!
