@@ -6,8 +6,7 @@ inline: false
 related_posts: false
 ---
 
-This paper is extension of my ECOC 2022 paper entitled *A Pragmatic Power-Consumption Analysis for IPoWDM Networks with ZR/ZR+ Modules
-*
+This paper is extension of my ECOC 2022 paper entitled *A Pragmatic Power-Consumption Analysis for IPoWDM Networks with ZR/ZR+ Modules*
 
 ---
 
