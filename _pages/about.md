@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: <a href='#'>Politecnico di Milano</a>. Building 20, Via Giuseppe Ponzio, 34, 20133 Milano MI.
 
 profile:
   align: right
