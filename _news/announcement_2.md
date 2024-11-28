@@ -6,8 +6,9 @@ inline: false
 related_posts: false
 ---
 
-This paper is extension of my [ECOC 2022 paper](https://ieeexplore.ieee.org/abstract/document/9979283/).
+This paper is extension of my ECOC 2022 paper entitled *A Pragmatic Power-Consumption Analysis for IPoWDM Networks with ZR/ZR+ Modules
+*
 
 ---
 
-The link to the journal version of the paper is: [Power-consumption analysis for different IPoWDM network architectures with ZR/ZR+ and long-haul muxponders](https://ieeexplore.ieee.org/abstract/document/10752822)
+The journal version of the paper is entitled: *Power-consumption analysis for different IPoWDM network architectures with ZR/ZR+ and long-haul muxponders*
