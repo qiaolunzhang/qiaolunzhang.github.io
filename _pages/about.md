@@ -10,7 +10,7 @@ profile:
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>Department of Electronics, Information and Bioengineering</p>
-    <p>Room 031c, Building 20</>
+    <p>Room 031c, Building 20</p>
     <p>Via Giuseppe Ponzio, 34 Milano 20133, IT</p>
 
 news: true # includes a list of news items
