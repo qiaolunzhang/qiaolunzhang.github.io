@@ -1,6 +1,6 @@
 ---
 layout: about
-title: Home
+title: About
 permalink: /
 subtitle: <a href='#'>Politecnico di Milano</a>. 
 
