@@ -1,7 +1,7 @@
 ---
 layout: post
 title: One of my first-authored paper is accepted by IEEE/OSA JOCN
-date: 2024-11-27 16:11:00-0400
+date: 2024-11-05 16:11:00-0400
 inline: false
 related_posts: false
 ---
