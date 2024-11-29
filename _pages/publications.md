@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: publications
-description: star(*) represents corresponding author.
+description: star(*) denotes corresponding author and dagger (†) indicates co-first authors
 nav: true
 nav_order: 1
 ---
