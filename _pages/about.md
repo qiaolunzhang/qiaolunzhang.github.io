@@ -22,7 +22,7 @@ I am a final-year PhD candidate at Politecnico di Milano (PoliMI), Italy under s
 I also worked with Dr. [Patricia Layec](https://www.nokia.com/blog/author/patricia-layec/) in Nokia Bell Labs France as a assistant optical networking research in 2023.
 I visited the Quantum Information Team led by Prof. [Eleni Diamanti](https://largo.lip6.fr/~ediamanti/research.html) in Sorbonne University in 2024. 
 
-My research interest cover a broad spectrum of topic in resource allocation for optical networks, which a focus on optimization and machine learning approaches to improve the energy efficiency and network resiliency of optical networks. My current research focus is on the following two topics:
+My research interests cover a broad spectrum of topics in resource allocation for optical networks, which a focus on optimization and machine learning approaches to improve the energy efficiency and network resiliency of optical networks. My current research focus is on the following two topics:
 
 - Green and Resilient Quantum Communication Networks
 - Optical Networks for Distributed Training of Large AI Models
