@@ -25,6 +25,6 @@ I visited the Quantum Information Team led by Prof. [Eleni Diamanti](https://lar
 My research interests cover a broad spectrum of topics in resource allocation for optical networks, which a focus on optimization and machine learning approaches to improve the energy efficiency and network resiliency of optical networks. My current research focus is on the following two topics:
 
 - Green and Resilient Quantum Communication Networks
-- Optical Networks for Distributed Training of Large AI Models
+- Optical Networks for Resilient Distributed Training of Large AI Models
 
 Please feel free to reach out via email at <qiaolun.zhang@mail.polimi.it> :)
