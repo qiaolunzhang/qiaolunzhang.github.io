@@ -20,7 +20,7 @@ social: true # includes social icons at the bottom of the page
 
 I am a final-year PhD candidate at Politecnico di Milano (PoliMI), Italy under supervision of Prof. [Massimo Tornatore](https://tornatore.faculty.polimi.it/). I received my bachelor's degree from Shanghai Jiao Tong University (SJTU), China. Besides, I received a double master's degree from SJTU and PoliMI.
 I also worked with Dr. [Patricia Layec](https://www.nokia.com/blog/author/patricia-layec/) in Nokia Bell Labs France as an assistant optical networking researcher in 2023.
-I visited the Quantum Information Team led by Prof. [Eleni Diamanti](https://largo.lip6.fr/~ediamanti/research.html) in Sorbonne University for 3 months in 2024. 
+I visited the Quantum Information Team with Prof. [Eleni Diamanti](https://largo.lip6.fr/~ediamanti/research.html) and Prof. [Frédéric Grosshans](https://scholar.google.com/citations?user=VtYIPU4AAAAJ&hl=en) in Sorbonne University for 3 months in 2024. 
 
 My research interests cover a broad spectrum of topics in resource allocation for optical networks, which a focus on optimization and machine learning approaches to improve the energy efficiency and network resiliency of optical networks. My current research focus is on the following two topics:
 
