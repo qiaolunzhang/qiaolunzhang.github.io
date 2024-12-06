@@ -6,4 +6,4 @@ inline: true
 related_posts: false
 ---
 
-Look forward to the trip to London!
+One of my first-authored paper is accepted by INFOCOM 2025!
