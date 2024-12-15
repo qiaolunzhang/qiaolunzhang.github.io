@@ -6,4 +6,4 @@ inline: true
 related_posts: false
 ---
 
-One of my first-authored paper is accepted by INFOCOM 2025!
+One of my first-authored paper about quantum networks is accepted by INFOCOM 2025!
