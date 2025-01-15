@@ -18,7 +18,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a final-year PhD candidate at Politecnico di Milano (PoliMI), Italy under supervision of Prof. [Massimo Tornatore](https://tornatore.faculty.polimi.it/). I received my bachelor's degree from Shanghai Jiao Tong University (SJTU), China. Besides, I received a double master's degree from SJTU and PoliMI.
+I am a postdoctoral researcher at Politecnico di Milano (PoliMI), Italy. I received my bachelor's degree from Shanghai Jiao Tong University (SJTU), China. Besides, I received a double master's degree from SJTU and PoliMI. I obtained my PHD degree with **cum laude** under supervision of Prof. [Massimo Tornatore](https://tornatore.faculty.polimi.it/) from Politecnico di Milano. 
 I also worked with Dr. [Patricia Layec](https://www.nokia.com/blog/author/patricia-layec/) in Nokia Bell Labs France as an assistant optical networking researcher in 2023.
 I visited the Quantum Information Team with Prof. [Eleni Diamanti](https://largo.lip6.fr/~ediamanti/research.html) and Prof. [Frédéric Grosshans](https://scholar.google.com/citations?user=VtYIPU4AAAAJ&hl=en) in Sorbonne University for 3 months in 2024. 
 
