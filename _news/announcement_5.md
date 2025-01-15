@@ -6,4 +6,4 @@ inline: true
 related_posts: false
 ---
 
-I'm happy to share that I defended my PhD with **Cum Laude**!
+I'm happy to share that I received my PhD with **Cum Laude**!
