@@ -2,7 +2,7 @@
 layout: post
 title: One of my first-authored paper on network resiliency is accepted by TNSM!
 date: 2025-03-20 13:30:00-0400
-inline: true
+inline: false
 related_posts: false
 ---
 
