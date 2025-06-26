@@ -1,0 +1,11 @@
+---
+layout: post
+title: I got Springer award from PoliMi!
+date: 2025-06-26 13:30:00-0400
+inline: false
+related_posts: false
+---
+
+I'm happy to share that that I got Spinger awards from Politecnico di Milano. The PhD Information Technology programme has established an annual award for the **best 10-12 PhD theses** of the year in collaboration with Springer.
+
+Short contributions from the selected PhD theses are published in a volume of the Polimi Springer Briefs.
