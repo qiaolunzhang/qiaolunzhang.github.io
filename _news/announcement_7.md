@@ -6,6 +6,10 @@ inline: false
 related_posts: false
 ---
 
-I'm happy to share that that I got Spinger awards from Politecnico di Milano. The PhD Information Technology programme has established an annual award for the **best 10-12 PhD theses** of the year in collaboration with Springer.
+I'm happy to share that that I got Spinger awards from Politecnico di Milano. 
+This is an annual award for the **best 10-12 PhD theses** of the year for the **Information Technology** program, consisting of the research track of **Computer Science and Engineering**, **Telecommunications**, **Electronics**, and **System and Control**. A summary of the thesis will be published as a book chapter and appear in theSpringer book series ”Special Topics in Information Technology”
+
+
+The PhD Information Technology programme has established an annual award for the **best 10-12 PhD theses** of the year in collaboration with Springer.
 
 Short contributions from the selected PhD theses are published in a volume of the Polimi Springer Briefs.
