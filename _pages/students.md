@@ -29,7 +29,7 @@ I have been working with Prof. Tornatore and co-supervise master students starti
         <h5 class="card-title mb-1">Jiaheng Xiong</h5>
         <h6 class="card-subtitle mb-2 text-muted">Jan. 2023 – Apr. 2025 (from first year of master)</h6>
         <p class="card-text mb-1"><strong>Thesis:</strong> Reliable Resource Allocation in Future Optical Networks</p>
-        <p class="card-text"><strong>Publications:</strong> first-authored papers at 2023 International Conference on Network and Service Management and 2024 European Conference on Optical Communication</p>
+        <p class="card-text"><strong>Publications:</strong> first-authored three papers: 2023 International Conference on Network and Service Management, 2024 European Conference on Optical Communication, 2025 European Conference on Optical Communication</p>
       </div>
     </div>
   </div>
