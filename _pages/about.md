@@ -22,14 +22,15 @@ I am an assistant professor at Politecnico di Milano (PoliMI), Italy. I received
 I also worked with Dr. [Patricia Layec](https://www.nokia.com/blog/author/patricia-layec/) in Nokia Bell Labs France as an assistant optical networking researcher in 2023.
 I visited the Quantum Information Team with Prof. [Eleni Diamanti](https://largo.lip6.fr/~ediamanti/research.html) and Prof. [Frédéric Grosshans](https://scholar.google.com/citations?user=VtYIPU4AAAAJ&hl=en) in Sorbonne University for 3 months in 2024. 
 
-My research interests cover a broad spectrum of topics in resource allocation for optical networks, which a focus on optimization and machine learning approaches to improve the energy efficiency and network resiliency of optical networks. My current research focus is on the following two topics:
+My research interests cover a broad spectrum of topics in resource allocation for communications networks, which a focus on optimization and machine learning approaches. My research objective is to build a high-performance, green, and intelligent network foundation to support the exponential scaling of AI and the evolution of future communication systems. My research is focused on the following two aspects:
 
-- Optical Networks for Resilient Distributed Training of Large AI Models
-  - Multi-Generation ROADM Upgrade for Multi-Fiber Optical Networks
-  - Optimization of Communication and Computation for Distributed Training of Large AI Models
+- Network for AI | Distributed Training & Distributed Inference Support
+  - Collective optimization for LLM training
+  - Edge-Cloud collaborative LLM inference
+  - Energy efficiency for AI services with satellites
 
-- Green and Resilient Quantum Communication Networks
-  - Optimized Energy-Efficient Deployment of QKD and Quantum Networks
-  - Resilient Key Distribution for Fiber-based and Satellite-based QKD Networks
+- AI for Network| Intelligent Network Optimization and Management
+  - Multi-agent network management
+  - AI&Optimization for classical and quantum network design and optimization
 
-Please feel free to reach out via email at <qiaolun.zhang@mail.polimi.it> :)
+Please feel free to reach out via email at <qiaolun.zhang@polimi.it> :)
