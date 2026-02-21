@@ -24,12 +24,12 @@ I visited the Quantum Information Team with Prof. [Eleni Diamanti](https://largo
 
 My research interests cover a broad spectrum of topics in resource allocation for communications networks, which a focus on optimization and machine learning approaches. My research objective is to build a high-performance, green, and intelligent network foundation to support the exponential scaling of AI and the evolution of future communication systems. My research is focused on the following two aspects:
 
-- Network for AI | Distributed Training & Distributed Inference Support
+- Network for AI \| Distributed Training & Distributed Inference Support
   - Collective optimization for LLM training
   - Edge-Cloud collaborative LLM inference
   - Energy efficiency for AI services with satellites
 
-- AI for Network| Intelligent Network Optimization and Management
+- AI for Network \| Intelligent Network Optimization and Management
   - Multi-agent network management
   - AI&Optimization for classical and quantum network design and optimization
 
