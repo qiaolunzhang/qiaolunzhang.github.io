@@ -34,7 +34,7 @@ I have been working with Prof. Tornatore and co-supervise master students starti
 *Jan. 2024 – July 2024*
 
 - Thesis: Minimizing Power Consumption in IPoWDM Networks: Role of Network Re-Configuration with Pluggable Optics
-- Nisanur published one first-authored paper at Asia Communications and Photonics Conference 2024 and received the **best paper award**
+- Nisanur published one first-authored paper at Asia Communications and Photonics Conference 2024 and received the <span class="badge badge-success">best paper award</span>
 
 ### Daoyu Wang
 
@@ -66,4 +66,3 @@ I have been working with Prof. Tornatore and co-supervise master students starti
 ## Prospective Students
 
 My projects are research-driven scientific discovery, if you're enthusiastic about diving into research and pursuing a master's project or thesis within my areas, please send me an email with your cv and research interests.
-
