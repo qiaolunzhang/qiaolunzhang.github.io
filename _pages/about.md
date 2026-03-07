@@ -33,6 +33,6 @@ My research interests cover a broad spectrum of topics in resource allocation fo
   - Multi-agent network management
   - AI&Optimization for classical and quantum network design and optimization
 
-We are recruiting research interns. If you are passionate about the intersection of AI and computer networking, and you’re eager to contribute to cutting-edge research, don’t hesitate to contact me. 
+We are recruiting research interns. If you are passionate about the intersection of AI and computer networking, don’t hesitate to contact me. 
 I am committed to supporting exceptional individuals like you and helping you achieve your academic and professional goals.
 Please feel free to reach out via email at <qiaolun.zhang@polimi.it> :)
