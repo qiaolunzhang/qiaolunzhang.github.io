@@ -2,23 +2,22 @@
 layout: about
 title: About
 permalink: /
-subtitle: <a href='#'>Politecnico di Milano</a>. 
+subtitle: <a href='https://www.eitech.edu.cn/en/'>Eastern Institute of Technology, Ningbo</a>, China.
 
 profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>Department of Electronics, Information and Bioengineering</p>
-    <p>Room 031c, Building 20</p>
-    <p>Via Giuseppe Ponzio, 34 Milano 20133, IT</p>
+    <p>Eastern Institute of Technology, Ningbo</p>
+    <p>China</p>
 
 news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am an assistant professor at Politecnico di Milano (PoliMI), Italy. I received my bachelor's degree from Shanghai Jiao Tong University (SJTU), China. Besides, I received a double master's degree from SJTU and PoliMI. I obtained my PHD degree with **cum laude** under supervision of Prof. [Massimo Tornatore](https://tornatore.faculty.polimi.it/) from Politecnico di Milano. 
+I am an assistant professor at the Eastern Institute of Technology, Ningbo (EIT), China. I received my bachelor's degree from Shanghai Jiao Tong University (SJTU), China. Besides, I received a double master's degree from SJTU and PoliMI. I obtained my PHD degree with **cum laude** under supervision of Prof. [Massimo Tornatore](https://tornatore.faculty.polimi.it/) from Politecnico di Milano.
 I also worked with Dr. [Patricia Layec](https://www.nokia.com/blog/author/patricia-layec/) in Nokia Bell Labs France as an assistant optical networking researcher in 2023.
 I visited the Quantum Information Team with Prof. [Eleni Diamanti](https://largo.lip6.fr/~ediamanti/research.html) and Prof. [Frédéric Grosshans](https://scholar.google.com/citations?user=VtYIPU4AAAAJ&hl=en) in Sorbonne University for 3 months in 2024. 
 
